@@ -1,0 +1,14 @@
+import React from 'react';
+import LoginForm from '@/components/auth/LoginForm';
+
+export default function LoginPage() {
+  return (
+    <div className="bg-white p-8 rounded-lg shadow-lg">
+      <div className="text-center mb-6">
+        <h1 className="text-3xl font-bold text-gray-900">Asset Manager</h1>
+        <p className="text-gray-600 mt-2">Sign in to your account</p>
+      </div>
+      <LoginForm />
+    </div>
+  );
+}
