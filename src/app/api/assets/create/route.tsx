@@ -34,7 +34,7 @@ export async function POST(req: Request) {
         created_by: userId,
         })
         .select()
-        .single(); // <-- fixes TypeScript issue
+        .single(); 
 
     if (error) {
         return NextResponse.json({ error: error.message }, { status: 400 });
