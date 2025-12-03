@@ -9,14 +9,11 @@ export async function POST(req: Request) {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
         {
         cookies: {
-            getAll() {
-            return cookieStore.getAll();
-            },
-            setAll(cookiesToSet) {
+            getAll: () => cookieStore.getAll(),
+            setAll: (cookiesToSet) =>
             cookiesToSet.forEach(({ name, value, options }) =>
                 cookieStore.set(name, value, options)
-            );
-            },
+            ),
         },
         }
     );
@@ -33,12 +30,11 @@ export async function POST(req: Request) {
     const { data, error } = await supabase
         .from("assets")
         .insert({
-            ...form,
-            created_by: userId,
+        ...form,
+        created_by: userId,
         })
         .select()
-        .single();
-
+        .single(); // <-- fixes TypeScript issue
 
     if (error) {
         return NextResponse.json({ error: error.message }, { status: 400 });
@@ -49,9 +45,9 @@ export async function POST(req: Request) {
         user_id: userId,
         action: "Created new asset",
         entity_type: "asset",
-        entity_id: data[0].id,
+        entity_id: data.id, // now safe
         details: form,
     });
 
-    return NextResponse.json({ success: true, asset: data[0] });
+    return NextResponse.json({ success: true, asset: data });
 }
